@@ -1,13 +1,35 @@
 require('dotenv').config()
 const Hapi = require('@hapi/hapi');
+const Inert = require('@hapi/inert');
+const Vision = require('@hapi/vision');
+const HapiSwagger = require('hapi-swagger');
+
 
 const init = async () => {
-    console.log(process.env)
     const server = Hapi.server({
         port: process.env.PORT || 3000,
         host: 'localhost'
     });
 
+    // Swagger setup
+    const swaggerOptions = {
+        info: {
+            title: 'Smoothie API Documentation',
+            version: require('./package.json').version,
+        },
+        documentationPath: '/docs'
+    };
+
+    await server.register([
+        Inert,
+        Vision,
+        {
+            plugin: HapiSwagger,
+            options: swaggerOptions
+        }
+    ]);
+
+    // Allows me to load routes in whatever dir structure I want
     await server.register({
         plugin: require('hapi-routes'),
         options: {

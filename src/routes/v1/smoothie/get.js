@@ -2,6 +2,10 @@ const db = require('../../../db')
 const routes = [{
     method: 'GET',
     path: '/',
+    options: {
+        description: 'get smoothies',
+        tags: ['api'],
+    },
     handler: async function (request, h) {
         try {
             let x = await db.query('SELECT 1+1')
