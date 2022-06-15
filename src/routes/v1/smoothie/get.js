@@ -3,9 +3,14 @@ const routes = [{
     method: 'GET',
     path: '/',
     handler: async function (request, h) {
-        let x = await db.query('SELECT 1+1')
+        try {
+            let x = await db.query('SELECT 1+1')
 
-        return x
+            return x
+        } catch (e) {
+            throw new Error(e)
+        }
+
         return 'Hello World!';
     }
 }]
