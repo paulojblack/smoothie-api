@@ -1,0 +1,19 @@
+{
+  "name": "smoothie-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node .",
+    "start:watch": "nodemon ."
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@hapi/hapi": "^20.2.2",
+    "hapi-routes": "^5.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  }
+}
