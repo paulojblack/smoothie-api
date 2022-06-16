@@ -20,13 +20,12 @@ const Smoothie = sequelize.define('Smoothie', {
     }
 })
 
-const User = sequelize.define('User', {
-
-})
+// No fields needed (yet) other than a unique user ID
+const User = sequelize.define('User', {})
 
 Smoothie.User = Smoothie.belongsTo(User, { foreignKey: { name: 'userId', field: 'userId', allowNull: false } });
 
-// Old fashioned IIFE because I can't figure out these un-scoped awaits!
+// Old fashioned IIFE because I can't figure out these darn top level awaits!
 (async () => {
     await sequelize.sync()
 })();

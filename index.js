@@ -8,7 +8,19 @@ const HapiSwagger = require('hapi-swagger');
 const init = async () => {
     const server = Hapi.server({
         port: process.env.PORT || 3000,
-        host: 'localhost'
+        host: 'localhost',
+        // Return validation failure to client
+        routes: {
+            validate: {
+                failAction: async (request, h, err) => {
+                    if (err.isJoi) {
+                        console.log(err.message);
+                    }
+
+                    throw err;
+                }
+            }
+        }
     });
 
     // Swagger setup

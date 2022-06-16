@@ -1,5 +1,13 @@
 const Boom = require('@hapi/boom')
+const Joi = require('joi')
 const { sequelize: db } = require('../db');
+
+// Shared validation
+const ingredientsSchema = Joi.object({
+    name: Joi.string(),
+    unit: Joi.string(),
+    quantity: Joi.number()
+})
 
 const routes = [
     {
@@ -13,7 +21,7 @@ const routes = [
             let userId = Number(request.state.userId);
             
             if (!userId) {
-                return 'You have no yet created any smoothies!'
+                return 'You have not yet created any smoothies!'
             }
 
             let smoothies = db.models.Smoothie.findAll({ 
@@ -29,12 +37,16 @@ const routes = [
         options: {
             description: 'Add new smoothie recipe',
             tags: ['api'],
+            validate: {
+                payload: Joi.object({
+                    name: Joi.string().required(),
+                    ingredients: Joi.array().items(ingredientsSchema).required()
+                })
+            }
         },
         handler: async function (request, h) {
-            //TODO Add Joi validation
             const { name, ingredients } = request.payload;
-
-            let userId = Number(request.state.userId) // Value should be coerced into Number anyway, but casting just in case
+            let userId = Number(request.state.userId) // get cookie
 
             if (!userId) {
                 let user;
@@ -47,8 +59,9 @@ const routes = [
                 h.state('userId', String(userId)) // set cookie
             }
 
+            let smoothie;
             try {
-                await db.models.Smoothie.create({
+                smoothie = await db.models.Smoothie.create({
                     ingredients,
                     name,
                     userId: userId
@@ -61,7 +74,10 @@ const routes = [
                 return new Boom.Boom(e)
             }
             
-            return `Successfully create smoothie recipe named ${name}`;
+            return {
+                message: `Successfully create smoothie recipe named ${name} under userId ${userId}`,
+                body: smoothie
+            };
         }
     },
     {
@@ -70,6 +86,15 @@ const routes = [
         options: {
             description: 'Update smoothie recipe',
             tags: ['api'],
+            validate: {
+                params: Joi.object({
+                    id: Joi.number()
+                }),
+                payload: Joi.object({
+                    name: Joi.string(),
+                    ingredients: Joi.array().items(ingredientsSchema)
+                })
+            }
         },
         handler: async function (request, h) {
             //TODO Add Joi validation
@@ -110,15 +135,20 @@ const routes = [
     },
     {
         method: 'DELETE',
-        path: '/smoothie',
+        path: '/smoothie/{id}',
         options: {
             description: 'Delete a users\'s smoothie',
             tags: ['api'],
+            validate: {
+                params: Joi.object({
+                    id: Joi.number()
+                })
+            }
         },
         handler: async function (request, h) {
             //TODO Add Joi validation
             //TODO Inform user when attempting to delete a smoothie that doesn't exist.
-            const { smoothieId } = request.payload;
+            const { id: smoothieId } = request.params;
             let userId = Number(request.state.userId) // Value should be coerced into Number anyway, but casting just in case
 
             
@@ -138,8 +168,9 @@ const routes = [
                 return new Error(e)
             }
 
-
-            return `Deleted smoothie ${smoothieId}`;
+            return {
+                message: `Deleted smoothie ${smoothieId}`
+            }
         }
     },
 ]

@@ -7,7 +7,7 @@
 
 ## Description
 Provides basic CRUD for smoothie recipes.  
-Identity is managed with cookies and there is no authorization preventing users from access/mutating other user's smoothies.  
+Identity is managed with cookies and there is no authorization preventing users from accessing/mutating other user's smoothies.  
 Smoothie recipes must be uniquely named.  
 
 ## Server notes
