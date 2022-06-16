@@ -5,6 +5,11 @@
 - `npm start`
 - Navigate to `localhost:3000/docs` for Swagger docs
 
+## Description
+Provides basic CRUD for smoothie recipes.  
+Identity is managed with cookies and there is no authorization preventing users from access/mutating other user's smoothies.  
+Smoothie recipes must be uniquely named.  
+
 ## Server notes
 - ssh ec2-user@44.202.149.230 
 - /etc/nginx/nginx.conf has server config
@@ -17,7 +22,7 @@
     - Served on http://44.202.149.230:80
 
 
-### DB
+## DB
 
 DB conn string
 psql postgres://postgres:${password}@smoothie-db.ce37vs3vt2os.us-east-1.rds.amazonaws.com/smoothie
