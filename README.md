@@ -4,6 +4,10 @@
 - `npm i`
 - `npm start`
 - Navigate to `localhost:3000/docs` for Swagger docs
+- Create your first smoothie using the POST route, which will generate a new user record and save the `userId` cookie
+- GET, PUT or DELETE smoothie recipes at will.
+- To start fresh, delete the `userId` cookie.
+
 
 ## Description
 Provides basic CRUD for smoothie recipes.  

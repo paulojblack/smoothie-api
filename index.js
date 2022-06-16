@@ -23,6 +23,16 @@ const init = async () => {
         }
     });
 
+    // Cookie initialization
+    server.state('userId', {
+        ttl: null,
+        isSecure: false, //false since we havent set up ssl
+        isHttpOnly: true,
+        encoding: 'base64json',
+        clearInvalid: true,
+        strictHeader: true
+    });
+
     // Swagger setup
     const swaggerOptions = {
         info: {
