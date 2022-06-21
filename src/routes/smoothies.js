@@ -71,6 +71,7 @@ const routes = [
                 if (e.name == 'SequelizeUniqueConstraintError') {
                     return `Smoothie name "${name}" is already taken, please choose another`;
                 }
+
                 return new Boom.Boom(e)
             }
             

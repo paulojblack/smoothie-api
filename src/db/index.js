@@ -10,14 +10,22 @@ const sequelize = new Sequelize(process.env.DB_DATABASE_NAME, process.env.DB_USE
 const Smoothie = sequelize.define('Smoothie', {
     name: {
         type: DataTypes.STRING,
-        allowNull: false,
-        unique: true
+        allowNull: false
+    },
+    userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false
     },
     ingredients: {
         // Not JSONB because we aren't (currently) supporting operations on the field other than full replace
         type: DataTypes.JSON,
         allowNull: false
     }
+}, {
+    indexes: [{
+        unique: true,
+        fields: ["userId", "name"]
+    }]
 })
 
 // No fields needed (yet) other than a unique user ID

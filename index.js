@@ -26,7 +26,7 @@ const init = async () => {
     // Cookie initialization
     server.state('userId', {
         ttl: null,
-        isSecure: false, //false since we havent set up ssl
+        isSecure: false,
         isHttpOnly: true,
         encoding: 'base64json',
         clearInvalid: true,
