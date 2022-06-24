@@ -10,4 +10,4 @@ jobs:
         run: |
           TEMP=$(mktemp)
           echo "${{ secrets.SSH_KEY }}" > $TEMP
-          ssh -o 'StrictHostKeyChecking no' -i $TEMP ${{ SSH_USER }}@${{ secrets.SSH_HOST }} 'bash -c "./action_deploy.sh"'
+          ssh -o 'StrictHostKeyChecking no' -i $TEMP ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} 'bash -c "./action_deploy.sh"'
