@@ -6,7 +6,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy my lil thingie
+      - name: Deploy smoothie app
         run: |
           TEMP=$(mktemp)
           echo "${{ secrets.SSH_KEY }}" > $TEMP
