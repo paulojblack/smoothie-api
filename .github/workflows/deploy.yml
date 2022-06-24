@@ -1,0 +1,13 @@
+name: Deploy
+on:
+  push:
+    branches: [master]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy my lil thingie
+        run: |
+          TEMP=$(mktemp)
+          echo "${{ secrets.SSH_KEY }}" > $TEMP
+          ssh -o 'StrictHostKeyChecking no' -i $TEMP ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} 'bash -c "./action_deploy.sh"'
